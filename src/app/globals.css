@@ -1,0 +1,332 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-orbitron: var(--font-orbitron);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.font-orbitron {
+  font-family: var(--font-orbitron), sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 255, 0.5);
+}
+
+.vertical-streaks {
+  background-image: linear-gradient(
+    90deg,
+    transparent 99%,
+    rgba(0, 255, 255, 0.03) 100%
+  );
+  background-size: 10vw 100%;
+}
+
+.crt-scanlines {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.2)
+  );
+  background-size: 100% 4px;
+}
+
+@keyframes scan-horizontal {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.animate-scan-line {
+  animation: scan-horizontal 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes hero-rise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-hero-rise {
+  animation: hero-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-bg-motion {
+  transform: translate3d(
+      calc(var(--hero-mx, 0px) * -0.65),
+      calc(var(--hero-my, 0px) * -0.65),
+      0
+    )
+    scale(1.08);
+  will-change: transform, filter;
+}
+
+.interactive-panel {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 450ms ease,
+    background-color 450ms ease,
+    box-shadow 450ms ease;
+}
+
+.interactive-panel::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.16), transparent 42%);
+  opacity: 0;
+  transition: opacity 450ms ease;
+}
+
+.interactive-panel:hover {
+  transform: translate3d(0, -6px, 0);
+  border-color: rgba(103, 232, 249, 0.42);
+  background-color: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 24px 80px rgba(8, 145, 178, 0.12);
+}
+
+.interactive-panel:hover::before {
+  opacity: 1;
+}
+
+.chat-message-in {
+  animation: chat-message-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.chat-typing span:last-child {
+  animation: cursor-blink 800ms steps(2, end) infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.metric-card {
+  transition:
+    border-color 320ms ease,
+    background-color 320ms ease,
+    box-shadow 320ms ease;
+}
+
+.metric-card:hover {
+  border-color: rgba(103, 232, 249, 0.36);
+  background-color: rgba(34, 211, 238, 0.04);
+  box-shadow: 0 0 34px rgba(34, 211, 238, 0.08);
+}
+
+.metric-value {
+  animation: metric-flash 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.metric-bar {
+  transition:
+    width 640ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 640ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 320ms ease;
+}
+
+/* --- New Simulation & Premium Motion --- */
+
+.card-bg-animated {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-bg-animated::after {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background: radial-gradient(
+    circle at var(--bg-x, 50%) var(--bg-y, 50%),
+    rgba(34, 211, 238, 0.08) 0%,
+    rgba(34, 211, 238, 0.03) 25%,
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 1s ease;
+}
+
+@keyframes blink-cyan {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  50% { opacity: 0.7; filter: brightness(1.4) drop-shadow(0 0 8px rgba(34, 211, 238, 0.4)); }
+}
+
+.animate-blink-cyan {
+  animation: blink-cyan 2s ease-in-out infinite;
+}
+
+@keyframes shimmer-fast {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.shimmer-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+.group:hover .shimmer-overlay {
+  animation: shimmer-fast 1.5s infinite;
+}
+
+@keyframes value-change-blink {
+  0% { color: #22d3ee; }
+  50% { color: #fff; text-shadow: 0 0 12px #22d3ee; }
+  100% { color: #22d3ee; }
+}
+
+.animate-value-change {
+  animation: value-change-blink 0.6s ease-in-out;
+}
+
+@keyframes bg-drift {
+  0% { --bg-x: 20%; --bg-y: 20%; }
+  25% { --bg-x: 80%; --bg-y: 30%; }
+  50% { --bg-x: 70%; --bg-y: 80%; }
+  75% { --bg-x: 10%; --bg-y: 70%; }
+  100% { --bg-x: 20%; --bg-y: 20%; }
+}
+
+.animate-bg-drift::after {
+  animation: bg-drift 20s linear infinite;
+}
+
+@property --bg-x {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 50%;
+}
+
+@property --bg-y {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 50%;
+}
+
+@keyframes data-flicker {
+  0%, 100% { opacity: 1; }
+  25% { opacity: 0.8; }
+  50% { opacity: 0.9; }
+  75% { opacity: 0.7; }
+}
+
+.animate-data-flicker {
+  animation: data-flicker 0.15s infinite;
+}
+
+@keyframes scan-v {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.scanning-line-v {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(34, 211, 238, 0.15),
+    transparent
+  );
+  z-index: 5;
+  pointer-events: none;
+  animation: scan-v 4s linear infinite;
+}
+
+@keyframes reveal-band {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-rise,
+  .animate-scan-line,
+  .hero-bg-motion,
+  .chat-message-in,
+  .reveal-band,
+  .animate-bg-drift::after {
+    animation: none;
+    transform: none;
+  }
+}
